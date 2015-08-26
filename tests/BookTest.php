@@ -6,6 +6,7 @@
     */
     require_once "src/Book.php";
     require_once 'src/Author.php';
+	require_once "src/Copy.php";
     $server = 'mysql:host=localhost;dbname=library_test';
     $username = 'root';
     $password = 'root';
@@ -17,6 +18,7 @@
         {
             Book::deleteAll();
             Author::deleteAll();
+			Copy::deleteAll();
         }
 		
 		function test_getTitle()
@@ -121,6 +123,41 @@
 			$result = $test_book->getAuthors();
 			
 			$this->assertEquals([$test_author], $result);
+		}
+		
+		function test_searchTitle()
+		{
+			$title = "Three Blind Mice";
+			$test_book = new Book($title);
+			$test_book->save();
+			
+			$title2 = "Chicken Dog";
+			$test_book2 = new Book($title2);
+			$test_book2->save();
+			
+			$result = Book::searchTitle($test_book->gettitle());
+			
+			$this->assertEquals([$test_book], $result);
+		}
+		
+		function test_addCopy()
+		{
+			$title = "Three Blind Mice";
+			$test_book = new Book($title);
+			$test_book->save();
+			
+			$test_copy = new Copy($amount = 1, $test_book->getId());
+			$test_copy->save();
+			
+			$title2 = "Chicken Dog";
+			$test_book2 = new Book($title2);
+			$test_book2->save();
+			
+			$test_book->addCopies(1);
+			
+			$result = $test_copy->getAmount();
+			
+			$this->assertEquals(2, $result);
 		}
 	}
 ?>

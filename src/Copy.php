@@ -74,7 +74,7 @@
 		
 		static function deleteAll()
 		{
-			$GLOBALS['DB']->exec("DELETE FROM copies WHERE id = {$this->getId()};");
+			$GLOBALS['DB']->exec("DELETE FROM copies;");
 		}
 		
 		static function find($search_id)

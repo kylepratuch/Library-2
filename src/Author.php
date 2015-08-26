@@ -105,15 +105,14 @@
 		static function searchAuthor($search_author) 
 		{
 			$returned_authors = $GLOBALS['DB']->query("SELECT * FROM authors WHERE name = '{$search_author}';");
-			$authors = array();
 			foreach($returned_authors as $author)
 			{
-				$name = $author['name'];
-				$id = $author['id'];
-				$new_author = new Author($name, $id);
-				array_push($authors, $new_author);
+				if($search_author == $author['name']) {
+					$name = $author['name'];
+					$id = $author['id'];
+					return new Author($name, $id);	
+				}
 			}
-			return $authors;
 		}
 	}
 ?>
