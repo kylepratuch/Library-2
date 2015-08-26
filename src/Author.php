@@ -86,7 +86,7 @@
 		
 		function addBook($new_book)
 		{
-			$GLOBALS['DB']->exec("INSERT INTO authors_books (author_id, book_id) VALUES ({$new_book->getId()}, {$this->getId()});");
+			$GLOBALS['DB']->exec("INSERT INTO authors_books (author_id, book_id) VALUES ({$this->getId()}, {$new_book->getId()});");
 		}
 		
 		static function find($search_id)

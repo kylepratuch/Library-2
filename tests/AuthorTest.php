@@ -102,8 +102,26 @@
 			$this->assertEquals($test_author, $result);
 		}
 		
-		
-		
+		function test_addBook_getBooks()
+		{
+			$name = "Jerry Garcia";
+			$test_author = new Author($name);
+			$test_author->save();
+			
+			$name2 = "Frank Sinatra";
+			$test_author2 = new Author($name2);
+			$test_author2->save();
+			
+			$book_title = "Three Blind Mice";
+			$test_book = new Book($book_title);
+			$test_book->save();
+			
+			$test_author->addBook($test_book);
+			
+			$result = $test_author->getBooks();
+			
+			$this->assertEquals([$test_book], $result);
+		}
 		
 	}
 ?>
