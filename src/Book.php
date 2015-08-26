@@ -101,5 +101,26 @@
 			}
 			return $found_book;
 		}
+		
+		function addCopies($number_added) 
+		{
+			$copy = Copy::findBook($this->getId());
+			$new_amount = $copy->getAmount() + $number_added;
+			$copy->update($new_amount);
+		}
+		
+		static function searchTitle($search_title) 
+		{
+			$returned_books = $GLOBALS['DB']->query("SELECT * FROM books WHERE title = '{$search_title}';");
+			$books = array();
+			foreach($returned_books as $book)
+			{
+				$title = $book['title'];
+				$id = $book['id'];
+				$new_book = new Book($title, $id);
+				array_push($books, $new_book);
+			}
+			return $books;
+		}
 	}
 ?>
