@@ -13,7 +13,7 @@
 		
 		function setName($new_name)
 		{
-			$this->name =name;
+			$this->name = $new_name;
 		}
 		
 		function getName()
@@ -50,7 +50,7 @@
 			foreach($returned_authors as $author)
 			{
 				$name = $author['name'];
-				$this = $book['id'];
+				$id = $author['id'];
 				$new_author = new Author($name, $id);
 				array_push($authors, $new_author);
 			}
@@ -59,7 +59,7 @@
 		
 		static function deleteAll()
 		{
-			$GLOBALS['DB']->exec("DELETE FROM books;");
+			$GLOBALS['DB']->exec("DELETE FROM authors;");
 		}
 		
 		function delete()

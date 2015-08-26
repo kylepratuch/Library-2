@@ -11,9 +11,9 @@
 			$this->id = $id;
 		}
 		
-		function setTitle($new_name)
+		function setTitle($new_title)
 		{
-			$this->title = $title;
+			$this->title = $new_title;
 		}
 		
 		function getTitle()
@@ -45,12 +45,12 @@
 		
 		static function getAll()
 		{
-			$returned_books = $GLOBALS['DB']->query("SELECT * FROM booksl;");
+			$returned_books = $GLOBALS['DB']->query("SELECT * FROM books;");
 			$books = array();
 			foreach($returned_books as $book)
 			{
 				$title = $book['title'];
-				$this = $book['id'];
+				$id = $book['id'];
 				$new_book = new Book($title, $id);
 				array_push($books, $new_book);
 			}
