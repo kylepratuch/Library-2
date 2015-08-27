@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>LINRARY</title>
+    </head>
+    <body>
+        <h1>BOOKZ</h1>
+        {% if books is not empty %}
+            <p>Here your books is:</p>
+            <ul>
+                {% for book in books %}
+                    <li><a href="/books/{{ book.getId }}">{{ book.getTitle}}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form action='/books' method='post'>
+                <label for='book_title'>BOOK Name</label>
+                <input id='book_title' name='book_title' type='text'>
+
+                <button type='submit'>Add BOOK</button>
+            </form>
+
+            <form action='/delete_books' method='post'>
+                <button type='submit'>Clear</button>
+            </form>
+
+            <p><a href='/'>Home</a></p>
+
+    </body>
+</html>

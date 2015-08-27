@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>LINRARY</title>
+    </head>
+    <body>
+        <h1>ARTURTHZ</h1>
+        {% if authors is not empty %}
+            <p>Here your ARTURTHZ is:</p>
+            <ul>
+                {% for author in authors %}
+                    <li><a href="/authors/{{ author.getId }}">{{ author.getName}}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form action='/authors' method='post'>
+                <label for='name'>ARTURTHZ Name</label>
+                <input id='name' name='name' type='text'>
+
+                <button type='submit'>Add ARTURTHZ</button>
+            </form>
+
+            <form action='/delete_authors' method='post'>
+                <button type='submit'>Clear</button>
+            </form>
+
+            <p><a href='/'>Home</a></p>
+
+    </body>
+</html>
