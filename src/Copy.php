@@ -1,63 +1,63 @@
-<?php 
-	
-	class Copy 
+<?php
+
+	class Copy
 	{
 		private $amount;
 		private $book_id;
 		private $id;
-		
+
 		function __construct($amount = 0, $book_id = null, $id = null)
 		{
 			$this->amount = $amount;
 			$this->book_id = $book_id;
 			$this->id = $id;
 		}
-		
+
 		function setAmount($new_amount)
 		{
 			$this->amount = $new_amount;
-			
+
 		}
-		
+
 		function getAmount()
 		{
 			return $this->amount;
 		}
-		
+
 		function setBookId($new_book_id)
 		{
 			$this->book_id = $new_book_id;
-			
+
 		}
-		
+
 		function getBookId()
 		{
 			return $this->book_id;
 		}
-		
+
 		function setId($new_id)
 		{
 			$this->id = $new_id;
-			
+
 		}
-		
+
 		function getId()
 		{
 			return $this->id;
 		}
-		
+
 		function save()
 		{
-			$GLOBALS['DB']->exec("INSERT INTO copies (amount book_id) VALUE ({$this->getAmount()}, {getBookId()});");
+			$GLOBALS['DB']->exec("INSERT INTO copies (amount, book_id) VALUES ({$this->getAmount()}, {$this->getBookId()});");
 			$this->setId($GLOBALS['DB']->lastInsertId());
 		}
-		
+
 		function update($new_amount)
 		{
 			$GLOBALS['DB']->exec("UPDATE copies SET amount = {$new_amount} WHERE id = {$this->getId()};");
 			$this->setAmount($new_amount);
 		}
-		
+
 		static function getAll()
 		{
 			$returned_copies = $GLOBALS['DB']->query("SELECT * FROM copies");
@@ -71,12 +71,12 @@
 			}
 			return $copies;
 		}
-		
+
 		static function deleteAll()
 		{
 			$GLOBALS['DB']->exec("DELETE FROM copies;");
 		}
-		
+
 		static function find($search_id)
 		{
 			$found_copy = null;
@@ -89,8 +89,7 @@
 				return $found_copy;
 			}
 		}
-		
-		
+
 		static function findBook($search_book_id) {
 			$found_copy = null;
 			$copies = Copy::getAll();
@@ -102,6 +101,12 @@
 			}
 			return $found_copy;
 		}
-		
+
+		function addCopies($number_added)
+		{
+			$new_amount = $this->getAmount() + $number_added;
+			$this->update($new_amount);
+		}
+
 	}
 ?>
