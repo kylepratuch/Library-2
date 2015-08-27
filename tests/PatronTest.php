@@ -9,6 +9,7 @@
     require_once "src/Copy.php";
     require_once "src/Author.php";
     require_once "src/Patron.php";
+    require_once "src/Checkout.php";
 
     $server = 'mysql:host=localhost;dbname=library_test';
     $username = 'root';
@@ -23,6 +24,7 @@
             Copy::deleteAll();
             Author::deleteAll();
             Patron::deleteAll();
+            Checkout::deleteAll();
         }
 
         function test_setName()
@@ -80,6 +82,30 @@
             $result = Patron::find($test_patron->getId());
 
             $this->assertEquals($test_patron, $result);
+        }
+
+        function testAddCheckout()
+        {
+            $title = "Three Blind Mice";
+            $test_book = new Book($title);
+            $test_book->save();
+
+            $test_copy = new Copy($amount = 1, $test_book->getId());
+            $test_copy->save();
+
+            $name = "Joe Bongtana";
+            $test_patron = new Patron($name);
+            $test_patron->save();
+
+            $due_date = "01-01-2016";
+            $status = 1;
+            $test_checkout = new Checkout($test_copy->getId(), $test_patron->getId(), $due_date, $status);
+            $test_checkout->save();
+
+            $test_patron->addCheckout($test_checkout);
+            $result = Checkout::getAll();
+
+            $this->assertEquals($test_checkout, $result);
         }
     }
 ?>

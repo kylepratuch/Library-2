@@ -34,7 +34,7 @@
 
 		function update($new_name)
 		{
-			$GLOBALS['DB']->exec("UPDATE checkouts SET name = '{$new_name}' WHERE id = {$this->getId()};");
+			$GLOBALS['DB']->exec("UPDATE patrons SET name = '{$new_name}' WHERE id = {$this->getId()};");
 			$this->setName($new_name);
 		}
 
@@ -74,6 +74,33 @@
 				}
 			}
 			return $found_patron;
+		}
+
+		function getCheckouts()
+		{
+			$checkouts = array();
+			$results = $GLOBALS['DB']->query("SELECT * FROM checkouts WHERE patron_id = {$this->getId()};");
+
+			foreach ($results as $checkout) {
+				$copy_id = $checkout['copy_id'];
+				$patron_id = $checkout['patron_id'];
+				$due_date = $checkout['due_date'];
+				$status = $checkout['status'];
+				$id = $checkout['id'];
+				$new_checkout = new Checkout ($copy_id, $patron_id, $due_date, $status);
+				array_push($checkouts, $new_checkout);
+			}
+			return $checkouts;
+		}
+
+		function addCheckout($copy, $new_checkout)
+		{
+			$GLOBALS['DB']->exec("INSERT INTO checkouts (copy_id, patron_id, due_date, status) VALUES
+				({$copy->getId()},
+				{$this->getId()},
+				{$new_checkout->getDueDate()},
+				{$new_checkout->getStatus()});
+			");
 		}
 	}
 ?>
