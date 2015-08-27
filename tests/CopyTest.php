@@ -103,6 +103,50 @@
             $this->assertEquals(2, $result);
         }
 
+        function testFind()
+        {
+            $title = "Three Blind Mice";
+            $test_book = new Book($title);
+            $test_book->save();
+
+            $test_copy = new Copy($amount = 1, $test_book->getId());
+            $test_copy->save();
+
+            $title2 = "Chicken Dog";
+            $test_book2 = new Book($title2);
+            $test_book2->save();
+
+            $test_copy2 = new Copy($amount2 = 2, $test_book2->getId());
+            $test_copy2->save();
+
+            $result = Copy::find($test_copy->getId());
+
+            $this->assertEquals($test_copy, $result);
+        }
+
+        function testFindBookCopy()
+        {
+            $title = "Three Blind Mice";
+            $test_book = new Book($title);
+            $test_book->save();
+
+            $test_copy = new Copy($amount = 1, $test_book->getId());
+            $test_copy->save();
+
+            $title2 = "Chicken Dog";
+            $test_book2 = new Book($title2);
+            $test_book2->save();
+
+            $test_copy2 = new Copy($amount2 = 2, $test_book2->getId());
+            $test_copy2->save();
+
+            $result = Copy::findBookCopy($test_book->getId());
+
+            $this->assertEquals($test_copy, $result);
+        }
+
+
+
     }
 
 ?>

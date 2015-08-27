@@ -90,7 +90,7 @@
 			}
 		}
 
-		static function findBook($search_book_id) {
+		static function findBookCopy($search_book_id) {
 			$found_copy = null;
 			$copies = Copy::getAll();
 			foreach($copies as $copy) {
