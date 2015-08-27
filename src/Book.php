@@ -34,7 +34,7 @@
 		function save()
 		{
 			$GLOBALS['DB']->exec("INSERT INTO books (title) VALUES ('{$this->getTitle()}');");
-			$this->setId($GLOBALS['DB']->lastInsertId());
+			$this->id = $GLOBALS['DB']->lastInsertId();
 		}
 
 		function update($new_title)
@@ -116,6 +116,6 @@
 			return $books;
 		}
 
-		
+
 	}
 ?>
